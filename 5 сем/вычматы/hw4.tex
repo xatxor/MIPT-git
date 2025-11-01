@@ -1,0 +1,149 @@
+\documentclass[12pt]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, left=20mm, right=15mm, top=20mm, bottom=20mm}
+
+\title{Задача III.5.11.в$)$ Наилучшая среднеквадратичная линейная аппроксимация $f(x) = \ln(1+x)$ на $[0, 1]$}
+\author{Хамаш Виктории Б01-301}
+\date{}
+\begin{document}
+
+\maketitle
+
+\section*{Постановка задачи}
+Требуется построить наилучшую среднеквадратичную линейную аппроксимацию функции $f(x) = \ln(1+x)$ на отрезке $[0, 1]$ в виде:
+\[
+F(x) = u_0 + u_1x
+\]
+Коэффициенты $u_0$ и $u_1$ находятся методом наименьших квадратов (МНК) путём минимизации функционала:
+\[
+\Phi(u_0, u_1) = \int_0^1 (F(x) - f(x))^2 dx = \int_0^1 (u_0 + u_1x - \ln(1+x))^2 dx
+\]
+
+\section*{Теоретическое обоснование}
+Согласно Лекции 3 (МНК для непрерывного случая), для минимизации функционала $\Phi$ необходимо решить систему линейных алгебраических уравнений (СЛАУ) относительно $u_0$ и $u_1$:
+\begin{align*}
+(\varphi_0, \varphi_0)u_0 + (\varphi_0, \varphi_1)u_1 &= (f, \varphi_0) \\
+(\varphi_1, \varphi_0)u_0 + (\varphi_1, \varphi_1)u_1 &= (f, \varphi_1)
+\end{align*}
+где:
+\begin{itemize}
+    \item Базисные функции: $\varphi_0(x) = 1$, $\varphi_1(x) = x$
+    \item Скалярное произведение: $(g, h) = \int_0^1 g(x)h(x) dx$
+\end{itemize}
+
+\section*{Вычисление элементов системы}
+
+\subsection*{Элементы матрицы Грама}
+\begin{align*}
+(\varphi_0, \varphi_0) &= \int_0^1 1 \cdot 1 dx = \left[ x \right]_0^1 = 1 \\
+(\varphi_0, \varphi_1) = (\varphi_1, \varphi_0) &= \int_0^1 1 \cdot x dx = \left[ \frac{x^2}{2} \right]_0^1 = \frac{1}{2} \\
+(\varphi_1, \varphi_1) &= \int_0^1 x \cdot x dx = \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}
+\end{align*}
+
+\subsection*{Элементы правой части}
+\begin{align*}
+(f, \varphi_0) &= \int_0^1 \ln(1+x) \cdot 1 dx = I_0 \\
+(f, \varphi_1) &= \int_0^1 \ln(1+x) \cdot x dx = I_1
+\end{align*}
+
+Вычислим интегралы $I_0$ и $I_1$.
+
+\paragraph*{Вычисление $I_0$:}
+Применим интегрирование по частям. Положим:
+\[
+\begin{cases}
+u = \ln(1+x) \Rightarrow du = \frac{dx}{1+x} \\
+dv = dx \Rightarrow v = x
+\end{cases}
+\]
+Тогда:
+\[
+I_0 = \left[ x \ln(1+x) \right]_0^1 - \int_0^1 \frac{x}{1+x} dx
+\]
+Вычислим оставшийся интеграл:
+\[
+\int_0^1 \frac{x}{1+x} dx = \int_0^1 \left(1 - \frac{1}{1+x}\right) dx = \left[ x - \ln(1+x) \right]_0^1 = (1 - \ln 2) - (0 - 0) = 1 - \ln 2
+\]
+Подставляем:
+\[
+I_0 = (1 \cdot \ln 2) - (1 - \ln 2) = \ln 2 - 1 + \ln 2 = 2\ln 2 - 1
+\]
+
+\paragraph*{Вычисление $I_1$:}
+Также применим интегрирование по частям. Положим:
+\[
+\begin{cases}
+u = \ln(1+x) \Rightarrow du = \frac{dx}{1+x} \\
+dv = x dx \Rightarrow v = \frac{x^2}{2}
+\end{cases}
+\]
+Тогда:
+\[
+I_1 = \left[ \frac{x^2}{2} \ln(1+x) \right]_0^1 - \int_0^1 \frac{x^2}{2} \cdot \frac{1}{1+x} dx = \frac{1}{2}\ln 2 - \frac{1}{2} \int_0^1 \frac{x^2}{1+x} dx
+\]
+Разложим подынтегральное выражение:
+\[
+\frac{x^2}{1+x} = \frac{x^2 - 1 + 1}{1+x} = \frac{(x-1)(x+1)}{1+x} + \frac{1}{1+x} = (x-1) + \frac{1}{1+x}
+\]
+Вычислим интеграл:
+\[
+\int_0^1 \frac{x^2}{1+x} dx = \int_0^1 \left(x - 1 + \frac{1}{1+x}\right) dx = \left[ \frac{x^2}{2} - x + \ln(1+x) \right]_0^1 = \left(\frac{1}{2} - 1 + \ln 2\right) - (0) = \ln 2 - \frac{1}{2}
+\]
+Подставляем обратно в выражение для $I_1$:
+\[
+I_1 = \frac{1}{2}\ln 2 - \frac{1}{2} \left( \ln 2 - \frac{1}{2} \right) = \frac{1}{2}\ln 2 - \frac{1}{2}\ln 2 + \frac{1}{4} = \frac{1}{4}
+\]
+
+\section*{Решение системы уравнений}
+Система принимает вид:
+\begin{align}
+u_0 + \frac{1}{2}u_1 &= 2\ln 2 - 1 \\
+\frac{1}{2}u_0 + \frac{1}{3}u_1 &= \frac{1}{4}
+\end{align}
+Подставим численное значение $\ln 2 \approx 0.693147$ в уравнение (1):
+\[
+u_0 + 0.5u_1 = 2 \cdot 0.693147 - 1 = 1.386294 - 1 = 0.386294
+\]
+Умножим уравнение (2) на 2 для упрощения:
+\[
+u_0 + \frac{2}{3}u_1 = 0.5
+\]
+Теперь вычтем уравнение (1) из полученного уравнения:
+\[
+\left(u_0 + \frac{2}{3}u_1\right) - \left(u_0 + 0.5u_1\right) = 0.5 - 0.386294
+\]
+\[
+\left(\frac{2}{3} - \frac{1}{2}\right)u_1 = 0.113706
+\]
+\[
+\left(\frac{4}{6} - \frac{3}{6}\right)u_1 = 0.113706
+\]
+\[
+\frac{1}{6}u_1 = 0.113706
+\]
+\[
+u_1 = 0.113706 \cdot 6 = 0.682236
+\]
+Теперь найдём $u_0$ из уравнения (1):
+\[
+u_0 + 0.5 \cdot 0.682236 = 0.386294
+\]
+\[
+u_0 + 0.341118 = 0.386294
+\]
+\[
+u_0 = 0.386294 - 0.341118 = 0.045176
+\]
+
+\section*{Ответ}
+Наилучшая среднеквадратичная линейная аппроксимация функции $f(x) = \ln(1+x)$ на отрезке $[0, 1]$ имеет вид:
+\[
+\boxed{F(x) \approx 0.04518 + 0.68224x}
+\]
+
+
+\end{document}

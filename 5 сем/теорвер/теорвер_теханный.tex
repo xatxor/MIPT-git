@@ -1,0 +1,368 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\newtheorem{definition}{Определение}
+\newtheorem{theorem}{Теорема}
+\newtheorem{property}{Свойство}
+\newtheorem{example}{Пример}
+
+\begin{document}
+
+\section{Преобразование случайных величин. Математическое ожидание и дисперсия}
+
+\subsection{Преобразование случайных величин}
+
+\begin{theorem}[Преобразование с.в.]
+Пусть $\xi$ - с.в. с функцией распределения $F_\xi(x)$, $\varphi: \mathbb{R} \to \mathbb{R}$ - борелевская функция. Тогда для $\eta = \varphi(\xi)$:
+\[
+F_\eta(y) = P(\eta \leq y) = P(\xi \in \varphi^{-1}((-\infty, y]))
+\]
+\end{theorem}
+
+\begin{theorem}[Плотность преобразованной с.в.]
+Если $\xi$ абсолютно непрерывна с плотностью $f_\xi(x)$, $\varphi$ - диффеоморфизм, то $\eta = \varphi(\xi)$ имеет плотность:
+\[
+f_\eta(y) = f_\xi(\varphi^{-1}(y)) \cdot |(\varphi^{-1})'(y)|
+\]
+В общем случае:
+\[
+f_\eta(y) = \frac{f_\xi(\varphi^{-1}(y))}{|\varphi'(\varphi^{-1}(y))|}
+\]
+\end{theorem}
+
+\begin{example}
+Если $X \sim N(0,1)$, $f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$, и $Y = X^3$, то:
+\[
+f_Y(y) = \frac{1}{3\sqrt{2\pi}} e^{-y^{2/3}/2} \cdot \frac{1}{\sqrt[3]{y^2}}
+\]
+\end{example}
+
+\subsection{Математическое ожидание}
+
+\begin{definition}[Общее определение]
+\textbf{Математическое ожидание} с.в. $\xi$ определяется как:
+\[
+E\xi = \int_\Omega \xi(\omega) dP(\omega)
+\]
+\end{definition}
+
+\begin{definition}[Для дискретной с.в.]
+Если $\xi$ дискретна: $P(\xi = x_i) = p_i$, то:
+\[
+E\xi = \sum_i x_i \cdot p_i
+\]
+\end{definition}
+
+\begin{definition}[Для абсолютно непрерывной с.в.]
+Если $\xi$ имеет плотность $f_\xi(x)$, то:
+\[
+E\xi = \int_{\mathbb{R}} x \cdot f_\xi(x) dx
+\]
+\end{definition}
+
+\begin{theorem}[О замене переменной в м.о.]
+Пусть $\xi$ - с.в. с распределением $P_\xi$, $g: \mathbb{R} \to \mathbb{R}$ - борелевская функция. Тогда:
+\[
+Eg(\xi) = \int_\Omega g(\xi(\omega)) dP(\omega) = \int_{\mathbb{R}} g(x) dP_\xi(x)
+\]
+\end{theorem}
+
+\begin{property}[Свойства математического ожидания]
+\begin{enumerate}
+\item \textbf{Линейность:} $E(a\xi + b\eta) = aE\xi + bE\eta$
+\item \textbf{Монотонность:} если $\xi \leq \eta$ п.н., то $E\xi \leq E\eta$
+\item $E[I_A] = P(A)$ для любого события $A$
+\item Если $\xi = c$ п.н., то $E\xi = c$
+\item Если $\xi \geq 0$ и $E\xi = 0$, то $\xi = 0$ п.н.
+\item $|E\xi| \leq E|\xi|$
+\item Если $a \leq \xi \leq b$, то $a \leq E\xi \leq b$
+\end{enumerate}
+\end{property}
+
+\subsection{Дисперсия}
+
+\begin{definition}[Дисперсия]
+\[
+D\xi = E[(\xi - E\xi)^2] = E[\xi^2] - (E\xi)^2
+\]
+\end{definition}
+
+\begin{property}[Свойства дисперсии]
+\begin{enumerate}
+\item $D\xi \geq 0$, причем $D\xi = 0 \Leftrightarrow \xi = \text{const}$ п.н.
+\item $D(a\xi + b) = a^2 D\xi$
+\item Если $\xi$ и $\eta$ независимы, то $D(\xi + \eta) = D\xi + D\eta$
+\end{enumerate}
+\end{property}
+
+\subsection{Ковариация и корреляция}
+
+\begin{definition}[Ковариация]
+\[
+\text{cov}(\xi,\eta) = E[(\xi - E\xi)(\eta - E\eta)] = E[\xi\eta] - E\xi \cdot E\eta
+\]
+\end{definition}
+
+\begin{definition}[Корреляция]
+\[
+\rho(\xi,\eta) = \frac{\text{cov}(\xi,\eta)}{\sqrt{D\xi \cdot D\eta}}
+\]
+\end{definition}
+
+\begin{property}[Свойства ковариации]
+\begin{enumerate}
+\item $\text{cov}(\xi,\eta) = \text{cov}(\eta,\xi)$
+\item $\text{cov}(\xi,\xi) = D\xi$
+\item $\text{cov}(a\xi + b, c\eta + d) = ac \cdot \text{cov}(\xi,\eta)$
+\item $\text{cov}(\xi + \eta, \zeta) = \text{cov}(\xi,\zeta) + \text{cov}(\eta,\zeta)$
+\end{enumerate}
+\end{property}
+
+\subsection{Преобразования м.о. и дисперсии}
+
+\begin{theorem}[М.о. линейного преобразования]
+Для линейного преобразования $\eta = a\xi + b$:
+\[
+E\eta = aE\xi + b, \quad D\eta = a^2 D\xi
+\]
+\end{theorem}
+
+\begin{theorem}[М.о. и дисперсия суммы]
+Для $\xi_1,\ldots,\xi_n$:
+\[
+E\left(\sum_{i=1}^n \xi_i\right) = \sum_{i=1}^n E\xi_i
+\]
+\[
+D\left(\sum_{i=1}^n \xi_i\right) = \sum_{i=1}^n D\xi_i + 2\sum_{i<j} \text{cov}(\xi_i,\xi_j)
+\]
+\end{theorem}
+
+\begin{theorem}[Дисперсия суммы независимых с.в.]
+Если $\xi_1,\ldots,\xi_n$ независимы, то:
+\[
+D\left(\sum_{i=1}^n \xi_i\right) = \sum_{i=1}^n D\xi_i
+\]
+\end{theorem}
+
+\section{Производящие функции случайных величин}
+
+\subsection{Определение и свойства}
+
+\begin{definition}[Производящая функция]
+Для целочисленной случайной величины $\xi$ с распределением $P(\xi = n) = p_n$ \textbf{производящая функция} определяется как:
+\[
+g_\xi(z) = E[z^\xi] = \sum_{n=0}^\infty p_n z^n, \quad z \in \mathbb{C}
+\]
+Радиус сходимости $R \geq 1$, причем $g_\xi(1) = 1$.
+\end{definition}
+
+\begin{property}[Свойства производящих функций]
+\begin{enumerate}
+\item $g_\xi(0) = p_0$, $g_\xi(1) = 1$
+\item $g_\xi^{(k)}(0) = k! \cdot p_k$
+\item Производящая функция однозначно определяет распределение: $g_\xi(z) \equiv g_\eta(z) \Leftrightarrow \xi \sim \eta$
+\item Если $E|\xi| < \infty$, то $E\xi = g_\xi'(1)$
+\item Если $E\xi^2 < \infty$, то $D\xi = g_\xi''(1) + g_\xi'(1) - (g_\xi'(1))^2$
+\end{enumerate}
+\end{property}
+
+\subsection{Производящие функции известных распределений}
+
+\begin{itemize}
+\item \textbf{Бернулли:} $g(z) = 1 + p(z-1)$
+\item \textbf{Биномиальное:} $g(z) = (1 + p(z-1))^n$
+\item \textbf{Пуассона:} $g(z) = e^{\lambda(z-1)}$
+\item \textbf{Геометрическое:} $g(z) = \frac{p}{1-z(1-p)}$
+\item \textbf{Отрицательное биномиальное:} $g(z) = \left(\frac{p}{1-z(1-p)}\right)^n$
+\end{itemize}
+
+\subsection{Производящая функция случайной суммы}
+
+\begin{theorem}[Производящая функция случайной суммы]
+Если $\xi_i$ - i.i.d., $J$ - целочисленная с.в., независимая от $\xi_i$, то для $S_J = \sum_{i=1}^J \xi_i$:
+\[
+g_{S_J}(z) = g_J(g_\xi(z))
+\]
+\end{theorem}
+
+\subsection{Тождество Вальда}
+
+\begin{theorem}[Тождество Вальда]
+Для $S_J = \sum_{i=1}^J \xi_i$, где $\xi_i$ - i.i.d., $J$ - целочисленная с.в.:
+\[
+ES_J = E\xi \cdot EJ
+\]
+Если также $E\xi^2 < \infty$, то:
+\[
+DS_J = E\xi^2 \cdot DJ + (E\xi)^2 \cdot D\xi
+\]
+\end{theorem}
+
+\section{Условное математическое ожидание}
+
+\subsection{Определения}
+
+\begin{definition}[Условное матожидание относительно события]
+Для события $C$ с $P(C) > 0$:
+\[
+E[\xi|C] = \frac{1}{P(C)}E[\xi \cdot I_C]
+\]
+\end{definition}
+
+\begin{definition}[Условное матожидание относительно $\sigma$-алгебры]
+$E[\xi|\mathcal{G}]$ - $\mathcal{G}$-измеримая с.в., удовлетворяющая:
+\[
+\int_A E[\xi|\mathcal{G}]dP = \int_A \xi dP \quad \forall A \in \mathcal{G}
+\]
+\end{definition}
+
+\subsection{Теорема Дуба и свойства}
+
+\begin{theorem}[Теорема Дуба]
+Условное матожидание - наилучшее среднеквадратичное приближение $\xi$ в классе $\mathcal{G}$-измеримых с.в.:
+\[
+E[\xi|\mathcal{G}] = \arg\min_{\eta \in L^2(\Omega,\mathcal{G},P)} E|\xi - \eta|^2
+\]
+\end{theorem}
+
+\begin{property}[Свойства условного матожидания]
+\begin{enumerate}
+\item \textbf{Линейность:} $E[a\xi + b\eta|\mathcal{G}] = aE[\xi|\mathcal{G}] + bE[\eta|\mathcal{G}]$
+\item \textbf{Формула полного м.о.:} $E[E[\xi|\mathcal{G}]] = E\xi$
+\item Если $\xi$ измерима относительно $\mathcal{G}$, то $E[\xi|\mathcal{G}] = \xi$
+\item $E[\eta\xi|\mathcal{G}] = \eta E[\xi|\mathcal{G}]$ для $\mathcal{G}$-измеримой $\eta$
+\end{enumerate}
+\end{property}
+
+\subsection{Выражения для условного матожидания}
+
+\begin{theorem}[Для дискретных с.в.]
+Если $\xi$, $\eta$ дискретны, то:
+\[
+E[\xi|\eta = y] = \sum_x x \cdot P(\xi = x|\eta = y)
+\]
+\end{theorem}
+
+\begin{theorem}[Для абсолютно непрерывных с.в.]
+Если $(\xi,\eta)$ имеют совместную плотность $f_{\xi,\eta}(x,y)$, то:
+\[
+E[\xi|\eta = y] = \int_{\mathbb{R}} x \cdot f_{\xi|\eta}(x|y) dx
+\]
+где $f_{\xi|\eta}(x|y) = \frac{f_{\xi,\eta}(x,y)}{f_\eta(y)}$
+\end{theorem}
+
+\subsection{Формулы полного матожидания и дисперсии}
+
+\begin{theorem}[Формула полного матожидания]
+Если $C_1,\ldots,C_n$ - разбиение $\Omega$, то:
+\[
+E\xi = \sum_{i=1}^n P(C_i)E[\xi|C_i]
+\]
+В общем случае: $E\xi = E[E[\xi|\mathcal{G}]]$
+\end{theorem}
+
+\begin{theorem}[Формула полной дисперсии]
+\[
+D\xi = E[D(\xi|\eta)] + D[E(\xi|\eta)]
+\]
+\end{theorem}
+
+\section{Неравенства и законы больших чисел}
+
+\subsection{Неравенства}
+
+\begin{theorem}[Неравенство Чебышева]
+Если $E\xi^2 < \infty$, то $\forall \varepsilon > 0$:
+\[
+P(|\xi - E\xi| \geq \varepsilon) \leq \frac{D\xi}{\varepsilon^2}
+\]
+\end{theorem}
+
+\begin{theorem}[Неравенство Коши-Буняковского]
+\[
+|E\xi\eta| \leq \sqrt{E\xi^2 \cdot E\eta^2}
+\]
+\end{theorem}
+
+\begin{theorem}[Неравенство Йенсена]
+Если $\varphi$ - выпуклая функция, то:
+\[
+\varphi(E\xi) \leq E\varphi(\xi)
+\]
+\end{theorem}
+
+\subsection{Законы больших чисел}
+
+\begin{theorem}[Слабый закон больших чисел Чебышева]
+Для $\xi_i$ - i.i.d., $E\xi_i = m$, $D\xi_i = \sigma^2 < \infty$:
+\[
+\frac{1}{n}\sum_{i=1}^n \xi_i \xrightarrow{P} m
+\]
+\end{theorem}
+
+\begin{theorem}[Сильный закон больших чисел Колмогорова]
+Для $\xi_i$ - i.i.d.:
+\[
+E|\xi_1| < \infty \Rightarrow \frac{1}{n}\sum_{i=1}^n \xi_i \xrightarrow{\text{п.н.}} E\xi_1
+\]
+\end{theorem}
+
+\subsection{Виды сходимости случайных величин}
+
+\begin{definition}[Сходимость по вероятности]
+\[
+\xi_n \xrightarrow{P} \xi \Leftrightarrow \forall \varepsilon > 0: \lim_{n\to\infty} P(|\xi_n - \xi| \geq \varepsilon) = 0
+\]
+\end{definition}
+
+\begin{definition}[Сходимость почти наверное]
+\[
+\xi_n \xrightarrow{\text{п.н.}} \xi \Leftrightarrow P(\lim_{n\to\infty} \xi_n(\omega) = \xi(\omega)) = 1
+\]
+\end{definition}
+
+\begin{definition}[Сходимость в среднем порядка p]
+\[
+\xi_n \xrightarrow{L_p} \xi \Leftrightarrow E|\xi_n - \xi|^p \to 0
+\]
+\end{definition}
+
+\begin{theorem}[Иерархия видов сходимости]
+\begin{itemize}
+\item Сходимость п.н. $\Rightarrow$ сходимость по вероятности
+\item Сходимость в $L_p$ $\Rightarrow$ сходимость по вероятности
+\item Сходимость по вероятности $\Rightarrow$ существование подпоследовательности, сходящейся п.н.
+\end{itemize}
+\end{theorem}
+
+\subsection{Слабая сходимость}
+
+\begin{definition}[Слабая сходимость]
+\[
+\xi_n \Rightarrow \xi \Leftrightarrow \forall f \in C_b(\mathbb{R}): Ef(\xi_n) \to Ef(\xi)
+\]
+\end{definition}
+
+\begin{definition}[Сходимость функций распределения]
+\[
+F_{\xi_n}(x) \to F_\xi(x) \quad \forall x \in C(F_\xi)
+\]
+где $C(F_\xi)$ - точки непрерывности $F_\xi$
+\end{definition}
+
+\begin{theorem}[Эквивалентность определений]
+Следующие утверждения эквивалентны:
+\begin{enumerate}
+\item $\xi_n \Rightarrow \xi$
+\item $F_{\xi_n}(x) \to F_\xi(x)$ во всех точках непрерывности $F_\xi$
+\end{enumerate}
+\end{theorem}
+
+\end{document}
